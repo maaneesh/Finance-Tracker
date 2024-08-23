@@ -1,23 +1,34 @@
-import React from "react";
-import { useState } from "react";
-import ToDoList from "./toDoList";
+import React, { createContext, useContext } from "react";
+import Category from "./components/categories";
 import Header from "./components/header";
-import CurrentBalance from "./currentBalance";
-import RecentTransactions from "./recentTransactions";
-import Categories from "./components/categories";
+import Savings from "./components/savings";
+import IncomeProvider from "./contexts/incomeContext";
+import Wallet from "./components/wallet";
+
+const moneyContext = createContext({
+  cash: 500,
+  cards: ["Apple Card", "Chase", "Discover"],
+  addToCards: () => {},
+});
 
 function App() {
+  const { cash, cards } = useContext(moneyContext);
+
   return (
     <>
       <Header />
-      <div className="flex justify-center">
-        <CurrentBalance />
-        <Categories name={"Shopping"} amount={420} max={1000} />
-        <Categories name={"Entertainment"} amount={400} max={500} />
-        <Categories name={"Groceries and food"} amount={600} max={1200} />
-      </div>
+      <moneyContext.Provider value={{ cash, cards }}>
+        <Wallet title={"Leather"} />
+        <div className="flex flex-col gap-4  md:flex-row md:justify-between ">
+          <Category type="Income" amount={500} />
+          <Category type="Expense" amount={600} />
+          <Category type="Savings" amount={600} />
+        </div>
+      </moneyContext.Provider>
     </>
   );
 }
 
 export default App;
+
+export { moneyContext };
