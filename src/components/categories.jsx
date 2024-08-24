@@ -3,7 +3,7 @@ import { currencyFormatter } from "../utils";
 import { useContext, useState } from "react";
 
 function Category({ title }) {
-  const { transaction, addTransaction } = useContext(moneyContext);
+  const { transactionsList, setTransactionsList } = useContext(moneyContext);
 
   return (
     <div className="card card-compact m-4  bg-base-100 w-96 shadow-xl">
@@ -12,7 +12,7 @@ function Category({ title }) {
       </div>
       <div className="card-body font-normal"></div>
       <h2>Transactions</h2>
-      <p>{transaction}</p>
+      <p>{transactionsList}</p>
     </div>
   );
 }

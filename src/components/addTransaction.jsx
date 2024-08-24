@@ -4,25 +4,28 @@ import { moneyContext } from "../App";
 function AddTransaction() {
   const [type, setTransactionType] = useState("");
   const [description, setDesctiption] = useState("");
-  const [amount, setAmount] = useState(null);
-
+  const [amount, setAmount] = useState("");
   const [transaction, setTransaction] = useState("");
 
+  //How do i add this transaction to the money context
+  //import context
+  const { transactionList, AddTransaction } = useContext(moneyContext);
   const handleSubmit = (event) => {
     console.log("handleSubmit ran");
     event.preventDefault(); // 👈️ prevent page refresh
 
-    // 👇️ Access input values here
-    console.log("firstName 👉️", type);
-    console.log("lastName 👉️", description);
-    console.log("amount 👉️", amount);
+    // // 👇️ Access input values here
+    // console.log("firstName 👉️", type);
+    // console.log("lastName 👉️", description);
+    // console.log("amount 👉️", amount);
 
     setTransaction(`${type} ${description} ${amount}`);
+    console.log(transaction);
 
     // 👇️ Clear all input values in the form
     setTransactionType("");
     setDesctiption("");
-    setAmount(null);
+    setAmount("");
   };
 
   return (
@@ -54,7 +57,7 @@ function AddTransaction() {
           type="number"
           placeholder="$"
           value={amount}
-          onChange={(e) => setAmount(event.target.value)}
+          onChange={(event) => setAmount(parseFloat(event.target.value))}
         />
 
         <button className="btn p-2" type="submit">
