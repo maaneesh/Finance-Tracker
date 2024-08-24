@@ -1,28 +1,33 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import Category from "./components/categories";
 import Header from "./components/header";
-import Savings from "./components/savings";
-import IncomeProvider from "./contexts/incomeContext";
-import Wallet from "./components/wallet";
+import AddTransaction from "./components/addTransaction";
 
-const moneyContext = createContext({
-  cash: 500,
-  cards: ["Apple Card", "Chase", "Discover"],
-  addToCards: () => {},
-});
+const moneyContext = createContext();
 
 function App() {
-  const { cash, cards } = useContext(moneyContext);
+  const [transaction, setTransaction] = useState([]);
+
+  const addTransaction = (newTransaction) => {
+    console.log("addTransaction called");
+
+    const updatedTransactions = [...priorTransactions, newTransaction];
+
+    setTransaction(updatedTransactions);
+  };
 
   return (
     <>
       <Header />
-      <moneyContext.Provider value={{ cash, cards }}>
-        <Wallet title={"Leather"} />
-        <div className="flex flex-col gap-4  md:flex-row md:justify-between ">
-          <Category type="Income" amount={500} />
-          <Category type="Expense" amount={600} />
-          <Category type="Savings" amount={600} />
+      <moneyContext.Provider value={{ transaction, addTransaction }}>
+        {/* <Wallet title={"Leather"} /> */}
+        <div className="flex flex-col gap-4 md:flex-row md:justify-around">
+          <Category title="Income" />
+          <Category title="Expense" />
+          <Category title="Savings" />
+        </div>
+        <div>
+          <AddTransaction />
         </div>
       </moneyContext.Provider>
     </>
