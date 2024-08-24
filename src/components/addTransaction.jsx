@@ -2,63 +2,67 @@ import React, { useState, useContext } from "react";
 import { moneyContext } from "../App";
 
 function AddTransaction() {
-  const { addTransaction } = useContext(moneyContext);
-  const [transaction, setTransaction] = useState({
-    type: "",
-    description: "",
-  });
+  const [type, setTransactionType] = useState("");
+  const [description, setDesctiption] = useState("");
+  const [amount, setAmount] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTransaction((prevTransaction) => ({
-      ...prevTransaction,
-      [name]: value,
-    }));
+  const [transaction, setTransaction] = useState("");
+
+  const handleSubmit = (event) => {
+    console.log("handleSubmit ran");
+    event.preventDefault(); // 👈️ prevent page refresh
+
+    // 👇️ Access input values here
+    console.log("firstName 👉️", type);
+    console.log("lastName 👉️", description);
+    console.log("amount 👉️", amount);
+
+    setTransaction(`${type} ${description} ${amount}`);
+
+    // 👇️ Clear all input values in the form
+    setTransactionType("");
+    setDesctiption("");
+    setAmount(null);
   };
-
-  const handleAddTransaction = (e) => {
-    e.preventDefault();
-    if (transaction.amount && transaction.type) {
-      addTransaction(transaction);
-      setTransaction({ type: "", amount: "", description: "" });
-    }
-  };
-
-  console.log(transaction);
 
   return (
-    <>
+    <div>
       <h2>Add Transaction</h2>
-      <form>
+      <form className="flex" onSubmit={handleSubmit}>
         <input
-          type="text"
-          name="type"
-          value={transaction.type}
-          onChange={handleChange}
-          placeholder="Type"
-          className="p-2 mt-1 border border-gray-300 rounded-md shadow-sm sm:text-sm"
-        />
-        <input
-          type="number"
-          name="amount"
-          value={transaction.amount}
-          onChange={handleChange}
-          placeholder="Amount"
-          className="p-2 mt-1 border border-gray-300 rounded-md shadow-sm sm:text-sm"
-        />
-        <input
-          type="text"
+          id="transaction-type"
           name="description"
-          value={transaction.description}
-          onChange={handleChange}
-          placeholder="Description"
-          className="p-2 mt-1 border border-gray-300 rounded-md shadow-sm sm:text-sm"
+          type="text"
+          placeholder="Type"
+          onChange={(event) => setTransactionType(event.target.value)}
+          value={type}
         />
-        <button onClick={handleAddTransaction} className="btn">
-          ADD
+
+        <br />
+        <input
+          id="description"
+          name="description"
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(event) => setDesctiption(event.target.value)}
+        />
+        <br />
+        <input
+          id="amount"
+          name="amount"
+          type="number"
+          placeholder="$"
+          value={amount}
+          onChange={(e) => setAmount(event.target.value)}
+        />
+
+        <button className="btn p-2" type="submit">
+          Submit form
         </button>
       </form>
-    </>
+      <h2>{transaction}</h2>
+    </div>
   );
 }
 

@@ -11,9 +11,7 @@ function App() {
   const addTransaction = (newTransaction) => {
     console.log("addTransaction called");
 
-    const updatedTransactions = [...priorTransactions, newTransaction];
-
-    setTransaction(updatedTransactions);
+    setTransaction([...transaction, newTransaction]);
   };
 
   return (
