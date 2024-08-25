@@ -6,14 +6,6 @@ import SavingsView from "./components/savingsView";
 import { MoneyProvider } from "./MoneyContext";
 
 function App() {
-  // const [transactionsList, setTransactionsList] = useState([1, 2, 3, 4, 56]);
-
-  // const addTransaction = (newTransaction) => {
-  //   console.log("addTransaction called");
-  //   setTransactionsList([...transactionsList, newTransaction]);
-  // };
-  // console.log(transactionsList);
-
   return (
     <>
       <Header />

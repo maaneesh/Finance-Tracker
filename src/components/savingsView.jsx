@@ -11,7 +11,7 @@ function SavingsView() {
   const addGoal = () => {
     if (newGoal.amount.trim() !== "" && newGoal.description.trim() !== "") {
       setSavingGoals([...savingGoals, newGoal]);
-      setNewGoal({ amount: "", description: "" }); // Clear the input fields after adding the goal
+      setNewGoal({ amount: "", description: "" });
     }
   };
 

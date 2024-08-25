@@ -1,7 +1,11 @@
 import React, { useContext, useState } from "react";
 import { MoneyContext } from "../MoneyContext";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-function ExpenseView() {
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+function ExpensesView() {
   const { expenseTransactions, setExpenseTransactions } =
     useContext(MoneyContext);
   const [newTransaction, setNewTransaction] = useState({
@@ -15,8 +19,35 @@ function ExpenseView() {
       newTransaction.description.trim() !== ""
     ) {
       setExpenseTransactions([...expenseTransactions, newTransaction]);
-      setNewTransaction({ amount: "", description: "" }); // Clear the input fields after adding the transaction
+      setNewTransaction({ amount: "", description: "" });
     }
+  };
+
+  const pieData = {
+    labels: expenseTransactions.map((transaction) => transaction.description),
+    datasets: [
+      {
+        data: expenseTransactions.map((transaction) =>
+          parseFloat(transaction.amount)
+        ),
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+          "#FF9F40",
+        ],
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+          "#FF9F40",
+        ],
+      },
+    ],
   };
 
   return (
@@ -57,9 +88,11 @@ function ExpenseView() {
         <button onClick={addTransaction} className="btn btn-primary mt-2">
           Add Transaction
         </button>
+        <h2>Expense Distribution</h2>
+        <Pie data={pieData} />
       </div>
     </div>
   );
 }
 
-export default ExpenseView;
+export default ExpensesView;
