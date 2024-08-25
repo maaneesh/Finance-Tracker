@@ -1,35 +1,32 @@
-import React, { createContext, useContext, useState } from "react";
-import Category from "./components/categories";
+import React, { useState } from "react";
 import Header from "./components/header";
-import AddTransaction from "./components/addTransaction";
 import IncomeView from "./components/incomeView";
 import ExpenseView from "./components/expenseView";
 import SavingsView from "./components/savingsView";
-
-const moneyContext = createContext();
+import { MoneyProvider } from "./MoneyContext";
 
 function App() {
-  const [transactionsList, setTransactionsList] = useState([]);
+  // const [transactionsList, setTransactionsList] = useState([1, 2, 3, 4, 56]);
 
-  const addTransaction = (newTransaction) => {
-    console.log("addTransaction called");
-    setTransactionsList([...transactionsList, newTransaction]);
-  };
-  console.log(transactionsList);
+  // const addTransaction = (newTransaction) => {
+  //   console.log("addTransaction called");
+  //   setTransactionsList([...transactionsList, newTransaction]);
+  // };
+  // console.log(transactionsList);
 
   return (
     <>
       <Header />
-      <moneyContext.Provider value={{ transactionsList, addTransaction }}>
-        <div className="flex flex-col gap-4 md:flex-row md:justify-around"></div>
-        <IncomeView />
-        <ExpenseView />
-        <SavingsView />
-      </moneyContext.Provider>
+
+      <MoneyProvider>
+        <div className="flex flex-col gap-4 md:flex-row md:justify-around">
+          <IncomeView />
+          <ExpenseView />
+          <SavingsView />
+        </div>
+      </MoneyProvider>
     </>
   );
 }
 
 export default App;
-
-export { moneyContext };
