@@ -4,4 +4,4 @@
 
 - React, Vite,
 
-![App Wireframe](https://github.com/maaneesh/Finance-Tracker/blob/main/design/Desktop.pdf?raw=true)
+![App Wireframe]('design/Desktop.pdf?raw=true')
